@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Evaluacion2.BD.Data.Entity
 {
+    [Index(nameof(Codigo), nameof(Nombre), Name = "TProducto_UQ", IsUnique = true)]
     public class TProducto : EntityBase
     {
         [Required(ErrorMessage = "El codigo es obligatorio")]

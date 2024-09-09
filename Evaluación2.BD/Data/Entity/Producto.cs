@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Evaluacion2.BD.Data.Entity
 {
+    [Index(nameof(Nombre), Name = "Producto_UQ", IsUnique = true)]
     public class Producto : EntityBase
     {
         [Required(ErrorMessage = "El nombre es obligatorio")]

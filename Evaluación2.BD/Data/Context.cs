@@ -14,6 +14,10 @@ namespace Evaluacion2.BD.Data
 
         public DbSet<Producto> Productos { get; set; }
 
+        public DbSet<Pedido> Pedidos { get; set; }
+
+        public DbSet<Renglon> Renglones { get; set; }
+
         public Context(DbContextOptions options) : base(options)
         {
 
