@@ -22,7 +22,7 @@ namespace Evaluacion2.BD.Data.Entity
 
         [Required(ErrorMessage = "El tipo de producto es obligatorio")]
         public int TProductoId { get; set; }
-        public TProducto TProducto { get; set; }
+        public TProducto TProducto { get; set; } 
 
     }
 }
