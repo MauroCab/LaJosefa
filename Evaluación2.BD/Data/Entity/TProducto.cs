@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Evaluacion2.BD.Data.Entity
 {
     [Index(nameof(Codigo), nameof(Nombre), Name = "TProducto_UQ", IsUnique = true)]
+    [Index(nameof(Codigo), Name = "CodigoTProducto_UQ", IsUnique = true)]
     public class TProducto : EntityBase
     {
         [Required(ErrorMessage = "El codigo es obligatorio")]
