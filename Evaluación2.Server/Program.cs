@@ -1,4 +1,4 @@
-using Evaluacion2.BD.Data;
+using ProyectoModelado2024.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 

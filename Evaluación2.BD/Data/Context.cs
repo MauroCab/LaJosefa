@@ -1,4 +1,4 @@
-﻿using Evaluacion2.BD.Data.Entity;
+﻿using ProyectoModelado2024.BD.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evaluacion2.BD.Data
+namespace ProyectoModelado2024.BD.Data
 {
     public class Context : DbContext
     {

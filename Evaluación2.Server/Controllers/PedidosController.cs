@@ -1,9 +1,9 @@
-﻿using Evaluacion2.BD.Data;
-using Evaluacion2.BD.Data.Entity;
+﻿using ProyectoModelado2024.BD.Data;
+using ProyectoModelado2024.BD.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Evaluacion2.Server.Controllers
+namespace ProyectoModelado2024.Server.Controllers
 {
     [ApiController]
     [Route("api/Pedidos")]

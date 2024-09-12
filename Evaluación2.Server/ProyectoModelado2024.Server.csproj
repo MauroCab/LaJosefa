@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Evaluación2.BD\Evaluacion2.BD.csproj" />
+    <ProjectReference Include="..\Evaluación2.BD\ProyectoModelado2024.BD.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Evaluacion2.BD.Migrations
+namespace ProyectoModelado2024.BD.Migrations
 {
     /// <inheritdoc />
     public partial class Inicio : Migration

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evaluacion2.BD.Data
+namespace ProyectoModelado2024.BD.Data
 {
     public class EntityBase
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evaluacion2.BD.Data.Entity
+namespace ProyectoModelado2024.BD.Data.Entity
 {
     [Index(nameof(Nombre), Name = "Producto_UQ", IsUnique = true)]
     public class Producto : EntityBase

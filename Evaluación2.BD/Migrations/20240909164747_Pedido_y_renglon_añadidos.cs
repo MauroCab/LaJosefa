@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Evaluacion2.BD.Migrations
+namespace ProyectoModelado2024.BD.Migrations
 {
     /// <inheritdoc />
     public partial class Pedido_y_renglon_añadidos : Migration

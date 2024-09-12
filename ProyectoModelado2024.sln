@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evaluacion2.Server", "Evaluación2.Server\Evaluacion2.Server.csproj", "{169E229E-9015-4F1B-9F21-F2A6E5EBDE23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoModelado2024.Server", "Evaluación2.Server\ProyectoModelado2024.Server.csproj", "{169E229E-9015-4F1B-9F21-F2A6E5EBDE23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evaluacion2.BD", "Evaluación2.BD\Evaluacion2.BD.csproj", "{43B78831-A863-4F80-8CE6-3D797E6ABE4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoModelado2024.BD", "Evaluación2.BD\ProyectoModelado2024.BD.csproj", "{43B78831-A863-4F80-8CE6-3D797E6ABE4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

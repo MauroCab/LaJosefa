@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evaluacion2.BD.Data.Entity
+namespace ProyectoModelado2024.BD.Data.Entity
 {
     public class Pedido : EntityBase
     {
