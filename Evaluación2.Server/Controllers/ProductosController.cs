@@ -16,11 +16,35 @@ namespace ProyectoModelado2024.Server.Controllers
             this.context = context;
         }
 
+        #region Peticiones Get
+
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> Get()
         {
             return await context.Productos.ToListAsync();
         }
+
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Producto>> Get(int id)
+        {
+            Producto? sel = await context.Productos.FirstOrDefaultAsync(x => x.Id == id);
+            if (sel == null)
+            {
+                return NotFound();
+            }
+            return sel;
+        }
+
+        [HttpGet("existe/{id:int}")]
+        public async Task<ActionResult<bool>> Existe(int id)
+        {
+            var existe = await context.Productos.AnyAsync(x => x.Id == id);
+            return existe;
+
+        }
+
+        #endregion
 
         [HttpPost]
         public async Task<ActionResult<int>> Post(Producto entidad)
@@ -68,6 +92,22 @@ namespace ProyectoModelado2024.Server.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await context.Productos.AnyAsync(x => x.Id == id);
+            if (!existe)
+            {
+                return NotFound($"El producto {id} no existe");
+            }
+            Producto EntidadABorrar = new Producto();
+            EntidadABorrar.Id = id;
+
+            context.Remove(EntidadABorrar);
+            await context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

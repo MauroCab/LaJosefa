@@ -16,11 +16,45 @@ namespace ProyectoModelado2024.Server.Controllers
             this.context = context;
         }
 
-        [HttpGet] 
+        #region Peticiones Get
+
+        [HttpGet]
         public async Task<ActionResult<List<TProducto>>> Get()
         {
             return await context.TProductos.ToListAsync();
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<TProducto>> Get(int id)
+        {
+            TProducto? sel = await context.TProductos.FirstOrDefaultAsync(x => x.Id == id);
+            if (sel == null)
+            {
+                return NotFound();
+            }
+            return sel;
+        }
+
+        [HttpGet("{cod}")] //api/TProductos/PAN
+        public async Task<ActionResult<TProducto>> GetByCod(string cod)
+        {
+            TProducto? sel = await context.TProductos.FirstOrDefaultAsync(x => x.Codigo == cod);
+            if (sel == null)
+            {
+                return NotFound();
+            }
+            return sel;
+        }
+
+        [HttpGet("existe/{id:int}")]
+        public async Task<ActionResult<bool>> Existe(int id)
+        {
+            var existe = await context.TProductos.AnyAsync(x => x.Id == id);
+            return existe;
+            
+        }
+
+        #endregion
 
         [HttpPost]
         public async Task<ActionResult<int>> Post(TProducto entidad)
@@ -65,6 +99,22 @@ namespace ProyectoModelado2024.Server.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await context.TProductos.AnyAsync(x => x.Id == id);
+            if(!existe)
+            {
+                return NotFound($"El tipo de producto {id} no existe");
+            }
+            TProducto EntidadABorrar = new TProducto();
+            EntidadABorrar.Id = id;
+
+            context.Remove(EntidadABorrar);
+            await context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

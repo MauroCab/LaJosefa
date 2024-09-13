@@ -16,11 +16,34 @@ namespace ProyectoModelado2024.Server.Controllers
             this.context = context;
         }
 
+        #region Peticiones Get
+
         [HttpGet]
         public async Task<ActionResult<List<Renglon>>> Get()
         {
             return await context.Renglones.ToListAsync();
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Renglon>> Get(int id)
+        {
+            Renglon? sel = await context.Renglones.FirstOrDefaultAsync(x => x.Id == id);
+            if (sel == null)
+            {
+                return NotFound();
+            }
+            return sel;
+        }
+
+        [HttpGet("existe/{id:int}")]
+        public async Task<ActionResult<bool>> Existe(int id)
+        {
+            var existe = await context.Renglones.AnyAsync(x => x.Id == id);
+            return existe;
+
+        }
+
+        #endregion
 
         [HttpPost]
         public async Task<ActionResult<int>> Post(Renglon entidad)
@@ -69,6 +92,22 @@ namespace ProyectoModelado2024.Server.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await context.Renglones.AnyAsync(x => x.Id == id);
+            if (!existe)
+            {
+                return NotFound($"El tipo de producto {id} no existe");
+            }
+            Renglon EntidadABorrar = new Renglon();
+            EntidadABorrar.Id = id;
+
+            context.Remove(EntidadABorrar);
+            await context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
