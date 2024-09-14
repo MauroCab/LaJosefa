@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Evaluación2.BD\ProyectoModelado2024.BD.csproj" />
+    <ProjectReference Include="..\ProyectoModelado2024.Shared\ProyectoModelado2024.Shared.csproj" />
   </ItemGroup>
 
 </Project>

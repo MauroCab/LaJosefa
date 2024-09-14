@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoModelado2024.Server
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoModelado2024.BD", "Evaluación2.BD\ProyectoModelado2024.BD.csproj", "{43B78831-A863-4F80-8CE6-3D797E6ABE4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoModelado2024.Shared", "ProyectoModelado2024.Shared\ProyectoModelado2024.Shared.csproj", "{F21A7DB9-85CF-4677-BC78-CE6927F98BDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{43B78831-A863-4F80-8CE6-3D797E6ABE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43B78831-A863-4F80-8CE6-3D797E6ABE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43B78831-A863-4F80-8CE6-3D797E6ABE4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21A7DB9-85CF-4677-BC78-CE6927F98BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F21A7DB9-85CF-4677-BC78-CE6927F98BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21A7DB9-85CF-4677-BC78-CE6927F98BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F21A7DB9-85CF-4677-BC78-CE6927F98BDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

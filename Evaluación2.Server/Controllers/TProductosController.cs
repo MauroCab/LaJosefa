@@ -1,7 +1,8 @@
-﻿using ProyectoModelado2024.BD.Data;
-using ProyectoModelado2024.BD.Data.Entity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProyectoModelado2024.BD.Data;
+using ProyectoModelado2024.BD.Data.Entity;
+using ProyectoModelado2024.Shared.DTO;
 
 namespace ProyectoModelado2024.Server.Controllers
 {
@@ -35,7 +36,7 @@ namespace ProyectoModelado2024.Server.Controllers
             return sel;
         }
 
-        [HttpGet("{cod}")] //api/TProductos/PAN
+        [HttpGet("GetByCod/{cod}")] //api/TProductos/PAN
         public async Task<ActionResult<TProducto>> GetByCod(string cod)
         {
             TProducto? sel = await context.TProductos.FirstOrDefaultAsync(x => x.Codigo == cod);
@@ -57,10 +58,14 @@ namespace ProyectoModelado2024.Server.Controllers
         #endregion
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post(TProducto entidad)
+        public async Task<ActionResult<int>> Post(CrearTProductoDTO entidadDTO)
         {
             try
             {
+                TProducto entidad = new TProducto();
+                entidad.Codigo = entidadDTO.Codigo;
+                entidad.Nombre = entidadDTO.Nombre;
+
                 context.TProductos.Add(entidad);
                 await context.SaveChangesAsync();
                 return entidad.Id;
