@@ -1,6 +1,7 @@
 using ProyectoModelado2024.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using ProyectoModelado2024.Server.Repositorio;
 
 //Constructor de la aplicación
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
 
+builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddScoped<ITProductoRepositorio, TProductoRepositorio>(); ;
 
 //Construcción de la aplicación
 var app = builder.Build();

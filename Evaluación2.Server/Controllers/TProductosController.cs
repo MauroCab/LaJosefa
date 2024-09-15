@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoModelado2024.BD.Data;
 using ProyectoModelado2024.BD.Data.Entity;
+using ProyectoModelado2024.Server.Repositorio;
 using ProyectoModelado2024.Shared.DTO;
 
 namespace ProyectoModelado2024.Server.Controllers
@@ -10,11 +12,14 @@ namespace ProyectoModelado2024.Server.Controllers
     [Route("api/TProductos")]
     public class TProductosController : ControllerBase
     {
-        private readonly Context context;
+        private readonly ITProductoRepositorio repositorio;
+        private readonly IMapper mapper;
 
-        public TProductosController(Context context)
+        public TProductosController(ITProductoRepositorio repositorio,
+                                    IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            this.mapper = mapper;
         }
 
         #region Peticiones Get
@@ -22,13 +27,13 @@ namespace ProyectoModelado2024.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<TProducto>>> Get()
         {
-            return await context.TProductos.ToListAsync();
+            return await repositorio.Select();
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<TProducto>> Get(int id)
         {
-            TProducto? sel = await context.TProductos.FirstOrDefaultAsync(x => x.Id == id);
+            TProducto? sel = await repositorio.SelectById(id);
             if (sel == null)
             {
                 return NotFound();
@@ -39,7 +44,7 @@ namespace ProyectoModelado2024.Server.Controllers
         [HttpGet("GetByCod/{cod}")] //api/TProductos/PAN
         public async Task<ActionResult<TProducto>> GetByCod(string cod)
         {
-            TProducto? sel = await context.TProductos.FirstOrDefaultAsync(x => x.Codigo == cod);
+            TProducto? sel = await repositorio.SelectByCod(cod);
             if (sel == null)
             {
                 return NotFound();
@@ -50,7 +55,7 @@ namespace ProyectoModelado2024.Server.Controllers
         [HttpGet("existe/{id:int}")]
         public async Task<ActionResult<bool>> Existe(int id)
         {
-            var existe = await context.TProductos.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
             return existe;
             
         }
@@ -62,13 +67,9 @@ namespace ProyectoModelado2024.Server.Controllers
         {
             try
             {
-                TProducto entidad = new TProducto();
-                entidad.Codigo = entidadDTO.Codigo;
-                entidad.Nombre = entidadDTO.Nombre;
+                TProducto entidad = mapper.Map<TProducto>(entidadDTO);
 
-                context.TProductos.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+                return await repositorio.Insert(entidad);
             }
             catch (Exception e)
             {
@@ -83,7 +84,7 @@ namespace ProyectoModelado2024.Server.Controllers
             {
                 return BadRequest("Datos incorrectos");
             }
-            var sel = await context.TProductos.Where(e => e.Id == id).FirstOrDefaultAsync();
+            var sel = await repositorio.SelectById(id);
             //sel = Seleccion
 
             if (sel == null)
@@ -91,13 +92,14 @@ namespace ProyectoModelado2024.Server.Controllers
                 return NotFound("No existe el tipo de documento buscado.");
             }
 
-            sel.Codigo = entidad.Codigo;
-            sel.Nombre = entidad.Nombre;
+            //sel.Codigo = entidad.Codigo;
+            //sel.Nombre = entidad.Nombre;
+
+            sel = mapper.Map<TProducto>(entidad); //pruebo a usar el mapper aqui
 
             try
             {
-                context.TProductos.Update(sel);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, sel);
                 return Ok();
             }
             catch (Exception e)
@@ -109,7 +111,7 @@ namespace ProyectoModelado2024.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.TProductos.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
             if(!existe)
             {
                 return NotFound($"El tipo de producto {id} no existe");
@@ -117,9 +119,15 @@ namespace ProyectoModelado2024.Server.Controllers
             TProducto EntidadABorrar = new TProducto();
             EntidadABorrar.Id = id;
 
-            context.Remove(EntidadABorrar);
-            await context.SaveChangesAsync();
-            return Ok();
+            if(await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
     }
 }
