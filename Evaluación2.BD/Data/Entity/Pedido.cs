@@ -11,5 +11,6 @@ namespace ProyectoModelado2024.BD.Data.Entity
     {
         [Required(ErrorMessage = "La fecha y la hora son obligatorias")]
         public DateTime FechaHora { get; set; }
+
     }
 }

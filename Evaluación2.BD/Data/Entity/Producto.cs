@@ -12,11 +12,8 @@ namespace ProyectoModelado2024.BD.Data.Entity
     public class Producto : EntityBase
     {
         [Required(ErrorMessage = "El nombre es obligatorio")]
-        [MaxLength(100, ErrorMessage = "El no debe tener mas de 100 caracteres)")]
+        [MaxLength(100, ErrorMessage = "El nombre debe tener mas de 100 caracteres)")]
         public string Nombre { get; set; }
-
-        [Required(ErrorMessage = "El precio de la unidad es obligatorio")]
-        public decimal PrecioUnidad { get; set; }
 
         [Required(ErrorMessage = "El stock es obligatorio")]
         public int Stock { get; set; }
