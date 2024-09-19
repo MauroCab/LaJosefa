@@ -77,7 +77,6 @@ namespace ProyectoModelado2024.Server.Controllers
             }
 
             sel.Nombre = entidad.Nombre;
-            sel.PrecioUnidad = entidad.PrecioUnidad;
             sel.Stock = entidad.Stock;
             sel.TProductoId = entidad.TProductoId;
             sel.TProducto = entidad.TProducto;
