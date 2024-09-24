@@ -9,6 +9,11 @@ namespace ProyectoModelado2024.Server.Util
         public AutoMapperProfiles()
         {
             CreateMap<CrearTProductoDTO, TProducto>();
+            CreateMap<CrearProductoDTO, Producto>();
+            CreateMap<CrearPedidoDTO, Pedido>();
+            CreateMap<CrearRenglonDTO, Renglon>();
+
+
         }
 
     }

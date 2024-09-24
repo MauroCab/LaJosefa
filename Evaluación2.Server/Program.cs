@@ -23,7 +23,9 @@ builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddScoped<ITProductoRepositorio, TProductoRepositorio>(); ;
+builder.Services.AddScoped<ITProductoRepositorio, TProductoRepositorio>();
+builder.Services.AddScoped<IProductoRepositorio, ProductoRepositorio>();
+builder.Services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
 
 //Construcción de la aplicación
 var app = builder.Build();

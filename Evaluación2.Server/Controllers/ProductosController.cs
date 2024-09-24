@@ -2,6 +2,9 @@
 using ProyectoModelado2024.BD.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProyectoModelado2024.Server.Repositorio;
+using AutoMapper;
+using ProyectoModelado2024.Shared.DTO;
 
 namespace ProyectoModelado2024.Server.Controllers
 {
@@ -9,11 +12,14 @@ namespace ProyectoModelado2024.Server.Controllers
     [Route("api/Productos")]
     public class ProductosController : ControllerBase
     {
-        private readonly Context context;
+        private readonly IProductoRepositorio repositorio;
+        private readonly IMapper mapper;
 
-        public ProductosController(Context context)
+        public ProductosController(IProductoRepositorio repositorio,
+                                    IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            this.mapper = mapper;
         }
 
         #region Peticiones Get
@@ -21,38 +27,35 @@ namespace ProyectoModelado2024.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> Get()
         {
-            return await context.Productos.ToListAsync();
+            return await repositorio.FullGetAll();
         }
 
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Producto>> Get(int id)
+        public async Task<ActionResult<Producto>> GetById(int id)
         {
-            Producto? sel = await context.Productos.FirstOrDefaultAsync(x => x.Id == id);
-            if (sel == null)
-            {
-                return NotFound();
-            }
-            return sel;
+            var producto = await repositorio.FullGetById(id);
+            if (producto == null) return NotFound();
+
+            return Ok(producto);
         }
 
         [HttpGet("existe/{id:int}")]
         public async Task<ActionResult<bool>> Existe(int id)
         {
-            var existe = await context.Productos.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
             return existe;
-
         }
 
         #endregion
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Producto entidad)
+        public async Task<ActionResult<int>> Post([FromBody] CrearProductoDTO entidadDTO)
         {
             try
             {
-                context.Productos.Add(entidad);
-                await context.SaveChangesAsync();
+                Producto entidad = mapper.Map<Producto>(entidadDTO);
+                await repositorio.Insert(entidad);
                 return entidad.Id;
             }
             catch (Exception e)
@@ -68,7 +71,7 @@ namespace ProyectoModelado2024.Server.Controllers
             {
                 return BadRequest("Datos incorrectos");
             }
-            var sel = await context.Productos.Where(e => e.Id == id).FirstOrDefaultAsync();
+            var sel = await repositorio.SelectById(id);
             //sel = Seleccion
 
             if (sel == null)
@@ -76,15 +79,11 @@ namespace ProyectoModelado2024.Server.Controllers
                 return NotFound("No existe el tipo de documento buscado.");
             }
 
-            sel.Nombre = entidad.Nombre;
-            sel.Stock = entidad.Stock;
-            sel.TProductoId = entidad.TProductoId;
-            sel.TProducto = entidad.TProducto;
+            sel = mapper.Map<Producto>(entidad); 
 
             try
             {
-                context.Productos.Update(sel);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, sel);
                 return Ok();
             }
             catch (Exception e)
@@ -96,17 +95,22 @@ namespace ProyectoModelado2024.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Productos.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
             if (!existe)
             {
-                return NotFound($"El producto {id} no existe");
+                return NotFound($"El tipo de producto {id} no existe");
             }
             Producto EntidadABorrar = new Producto();
             EntidadABorrar.Id = id;
 
-            context.Remove(EntidadABorrar);
-            await context.SaveChangesAsync();
-            return Ok();
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

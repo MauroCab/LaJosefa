@@ -57,7 +57,6 @@ namespace ProyectoModelado2024.Server.Controllers
         {
             var existe = await repositorio.Existe(id);
             return existe;
-            
         }
 
         #endregion
@@ -107,6 +106,7 @@ namespace ProyectoModelado2024.Server.Controllers
                 return BadRequest(e.Message);
             }
         }
+        
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)

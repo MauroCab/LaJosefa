@@ -57,9 +57,9 @@ namespace ProyectoModelado2024.Server.Repositorio
                 return false;
             }
 
-            var pepe = await SelectById(id);
+            var sel = await SelectById(id);
 
-            if (pepe == null)
+            if (sel == null)
             {
                 return false;
             }
@@ -78,14 +78,14 @@ namespace ProyectoModelado2024.Server.Repositorio
 
         public async Task<bool> Delete(int id)
         {
-            var pepe = await SelectById(id);
+            var sel = await SelectById(id);
 
-            if (pepe == null)
+            if (sel == null)
             {
                 return false;
             }
 
-            context.Set<E>().Remove(pepe);
+            context.Set<E>().Remove(sel);
             await context.SaveChangesAsync();
             return true;
         }
