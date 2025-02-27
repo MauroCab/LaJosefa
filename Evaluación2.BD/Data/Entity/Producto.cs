@@ -20,5 +20,7 @@ namespace ProyectoModelado2024.BD.Data.Entity
         public int TProductoId { get; set; }
         public TProducto TProducto { get; set; }
 
+        public bool EsComun { get; set; }
+
     }
 }

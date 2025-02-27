@@ -25,29 +25,20 @@ namespace ProyectoModelado2024.Server.Controllers
         #region Peticiones Get
 
         [HttpGet]
-        public async Task<ActionResult<List<Pedido>>> Get()
+        public async Task<ActionResult<List<PedidoDTO>>> Get()
         {
-            return await repositorio.Select();
+            return await repositorio.FullGetAll();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Pedido>> Get(int id)
+        public async Task<ActionResult<PedidoDTO>> Get(int id)
         {
-            Pedido? sel = await repositorio.SelectById(id);
-            if (sel == null)
-            {
+            var pedido = await repositorio.FullGetById(id);
+
+            if (pedido == null)
                 return NotFound();
-            }
-            return sel;
-        }
 
-        
-
-        [HttpGet("existe/{id:int}")]
-        public async Task<ActionResult<bool>> Existe(int id)
-        {
-            var existe = await repositorio.Existe(id);
-            return existe;
+            return pedido;
         }
 
         #endregion
@@ -94,7 +85,6 @@ namespace ProyectoModelado2024.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
             var sel = await repositorio.SelectById(id);
-            //sel = Seleccion
 
             if (sel == null)
             {

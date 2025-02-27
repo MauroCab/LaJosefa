@@ -1,11 +1,12 @@
 ﻿using ProyectoModelado2024.BD.Data.Entity;
+using ProyectoModelado2024.Shared.DTO;
 
 namespace ProyectoModelado2024.Server.Repositorio
 {
-    public interface IPedidoRepositorio: IRepositorio<Pedido>
+    public interface IPedidoRepositorio : IRepositorio<Pedido>
     {
         Task<Pedido> AddPedidoConRenglones(Pedido pedido, List<Renglon> renglones);
-        Task<List<Pedido>> FullGetAll();
-        Task<Pedido> FullGetById(int id);
+        Task<List<PedidoDTO>> FullGetAll();
+        Task<PedidoDTO> FullGetById(int id);
     }
 }
