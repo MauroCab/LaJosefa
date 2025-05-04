@@ -35,7 +35,7 @@ namespace ProyectoModelado2024.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pedidos");
+                    b.ToTable("Pedidos", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoModelado2024.BD.Data.Entity.Producto", b =>
@@ -64,7 +64,7 @@ namespace ProyectoModelado2024.BD.Migrations
                     b.HasIndex(new[] { "Nombre" }, "Producto_UQ")
                         .IsUnique();
 
-                    b.ToTable("Productos");
+                    b.ToTable("Productos", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoModelado2024.BD.Data.Entity.Renglon", b =>
@@ -90,7 +90,7 @@ namespace ProyectoModelado2024.BD.Migrations
 
                     b.HasIndex("ProductoId");
 
-                    b.ToTable("Renglones");
+                    b.ToTable("Renglones", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoModelado2024.BD.Data.Entity.TProducto", b =>
@@ -119,7 +119,7 @@ namespace ProyectoModelado2024.BD.Migrations
                     b.HasIndex(new[] { "Codigo", "Nombre" }, "TProducto_UQ")
                         .IsUnique();
 
-                    b.ToTable("TProductos");
+                    b.ToTable("TProductos", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoModelado2024.BD.Data.Entity.Producto", b =>

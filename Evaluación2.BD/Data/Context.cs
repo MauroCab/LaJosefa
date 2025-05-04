@@ -34,8 +34,18 @@ namespace ProyectoModelado2024.BD.Data
             {
                 fk.DeleteBehavior = DeleteBehavior.Restr­ict;
             }
-
+    
             base.OnModelCreating(modelBuilder);
+
+                modelBuilder.Entity<Renglon>()
+               .HasOne(r => r.Pedido)
+               .WithMany(p => p.Renglones)
+               .HasForeignKey(r => r.PedidoId);
+
+                 modelBuilder.Entity<Renglon>()
+                .HasOne(r => r.Producto)
+                .WithMany() // Si Producto no tiene una lista de Renglones
+                .HasForeignKey(r => r.ProductoId);
         }
     }
 }

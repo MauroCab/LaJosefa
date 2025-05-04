@@ -35,8 +35,8 @@ namespace ProyectoModelado2024.Server.Repositorio
         public async Task<PedidoDTO> FullGetById(int id)
         {
             var pedido = await context.Pedidos
-                           .Include(p => p.Renglones)
-                           .ThenInclude(r => r.Producto)
+                            .Include(p => p.Renglones)
+                            .ThenInclude(r => r.Producto)
                            .FirstOrDefaultAsync(p => p.Id == id);
 
             if (pedido == null)
