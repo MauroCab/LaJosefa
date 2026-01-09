@@ -1,0 +1,81 @@
+﻿section {
+    display: inline-block;
+    margin-left: calc(30% + 20px);
+    /* Tiene la misma distancia desde el margen a la izquierda que el ancho de el navmenu */
+    width: 65%;
+    position: relative;
+
+    input[type="button"],
+    input[type="submit"] {
+        border: 2px solid black;
+        border-radius: 4px;
+        padding: 8px;
+        font-weight: bold;
+
+        &:active {
+            color: #a8a8a8
+        }
+    }
+
+    input[type=number] {
+        width: 40px;
+    }
+
+    input[type=number],
+    input[type=text],
+    select {
+        border: 2px solid black;
+        border-radius: 5px;
+        height: 25pt;
+        font-size: 14pt;
+        padding: 2px;
+        box-sizing: border-box;
+    }
+}
+
+.custom-label {
+    font: 12pt sans-serif;
+}
+
+.custom-formItem {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.custom-productContainer {
+    margin-top: 20px;
+    border-top: solid 3px black;
+    width: 100%;
+    display: block;
+    padding-top: 20px;
+}
+
+.custom-product {
+    border: 3px solid black;
+    border-radius: 8px;
+    padding: 5px;
+    display: inline-block;
+    margin: 10px;
+    font-family: Arial, sans-serif;
+}
+
+
+.custom-greenButton {
+    background-color: #01c633;
+}
+
+.custom-redButton {
+    background-color: #ff5757;
+}
+
+
+#searchbar {
+    display: inline-block;
+    border: 3px solid;
+    border-radius: 5px;
+    height: 25pt;
+    font-size: 14pt;
+    color: black;
+    width: calc(70% - 65.2px);
+    box-sizing: border-box;
+}
