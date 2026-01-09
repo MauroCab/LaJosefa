@@ -31,11 +31,13 @@
         padding: 2px;
         box-sizing: border-box;
     }
+
+    label {
+        font: 12pt sans-serif;
+    }
 }
 
-.custom-label {
-    font: 12pt sans-serif;
-}
+
 
 .custom-formItem {
     display: block;

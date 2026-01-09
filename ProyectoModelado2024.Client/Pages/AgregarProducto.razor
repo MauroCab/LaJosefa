@@ -1,0 +1,26 @@
+﻿ @page "/agregarProducto"
+
+<PageTitle>Agregar Productos</PageTitle>
+
+<section id="agregarProducto">
+    <h2>Añadir Producto</h2>
+    <form action="POST">
+        <label class="custom-formItem">Nombre del nuevo producto</label>
+        <input class="custom-formItem" type="text" name="nombreProducto" placeholder="Nuevo Producto">
+        <label class="custom-formItem">Categoría del nuevo producto</label>
+        <div class="custom-formItem">
+            <select name="productType"> 
+                <option name="Panadería">Panadería</option>
+                <option name="Pastelería">Pastelería</option>
+                <option name="Sandwichería">Sandwichería</option>
+            </select>
+            <input type="button" value="Nuevo Tipo">
+        </div>
+        <input class="custom-formItem" id="submitButton" type="submit" value="Añadir producto al sistema">
+    </form>
+            
+</section>
+
+@code {
+
+}

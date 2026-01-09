@@ -1,0 +1,29 @@
+﻿@page "/crearPedido"
+
+<PageTitle>Crear Pedido</PageTitle>
+
+<section id="crearPedido">
+
+    <input type="text" name="searchCrear" id="searchbar">
+    <input type="button" value="Buscar">
+    <input type="button" class="greenButton" id="verPedido" value="Ver Pedido Actual">
+    <h2>Productos Comunes</h2>
+    <div class="custom-productContainer" id="commonProducts">
+        <div class="custom-product">
+            Producto
+            <input type="number" name="quantityValue" class="quantity" value="0" min="0" max="99">
+            <input type="checkbox" name="isCommonValue" class="isCommon">
+            <input type="button" class="greenButton" value="Añadir al pedido" style="display: block;  margin-top: 5px;">
+        </div>
+    </div>
+
+    <h2>Todos los productos</h2>
+    <div class="custom-productContainer" id="allProducts">
+                
+    </div>
+            
+</section>
+
+@code {
+    
+}
