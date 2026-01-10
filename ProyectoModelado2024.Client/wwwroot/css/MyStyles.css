@@ -1,7 +1,5 @@
 ﻿section {
     display: inline-block;
-    margin-left: calc(30% + 20px);
-    /* Tiene la misma distancia desde el margen a la izquierda que el ancho de el navmenu */
     width: 65%;
     position: relative;
 
