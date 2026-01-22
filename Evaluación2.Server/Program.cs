@@ -27,6 +27,11 @@ builder.Services.AddScoped<ITProductoRepositorio, TProductoRepositorio>();
 builder.Services.AddScoped<IProductoRepositorio, ProductoRepositorio>();
 builder.Services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
 
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri("https://localhost:7189/") // tu backend URL
+});
+
 //Construcción de la aplicación
 var app = builder.Build();
 

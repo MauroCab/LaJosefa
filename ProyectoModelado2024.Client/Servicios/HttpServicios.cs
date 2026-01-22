@@ -1,9 +1,10 @@
 ﻿
+using System.Text;
 using System.Text.Json;
 
 namespace ProyectoModelado2024.Client.Servicios
 {
-    public class HttpServicios
+    public class HttpServicios : IHttpServicios
     {
         private readonly HttpClient http;
 
@@ -26,10 +27,59 @@ namespace ProyectoModelado2024.Client.Servicios
             }
         }
 
+        public async Task<HttpRespuesta<object>> Post<T>(string url, T entidad)
+        {
+            var enviarJson = JsonSerializer.Serialize(entidad);
+
+            var enviarContent = new StringContent(enviarJson,
+                                Encoding.UTF8,
+                                "application/json");
+
+            var response = await http.PostAsync(url, enviarContent);
+            if (response.IsSuccessStatusCode)
+            {
+                var respuesta = await DesSerializar<object>(response);
+                return new HttpRespuesta<object>(respuesta, false, response);
+            }
+            else
+            {
+                return new HttpRespuesta<object>(default, true, response);
+            }
+        }
+
+        public async Task<HttpRespuesta<object>> Put<T>(string url, T entidad)
+        {
+            var enviarJson = JsonSerializer.Serialize(entidad);
+
+            var enviarContent = new StringContent(enviarJson,
+                                Encoding.UTF8,
+                                "application/json");
+
+            var response = await http.PutAsync(url, enviarContent);
+            if (response.IsSuccessStatusCode)
+            {
+                //var respuesta = await DesSerializar<object>(response);
+                return new HttpRespuesta<object>(null, false, response);
+            }
+            else
+            {
+                return new HttpRespuesta<object>(default, true, response);
+            }
+        }
+
+        public async Task<HttpRespuesta<object>> Delete(string url)
+        {
+            var respuesta = await http.DeleteAsync(url);
+            return new HttpRespuesta<object>(null,
+                                             !respuesta.IsSuccessStatusCode,
+                                             respuesta);
+        }
+
         private async Task<T> DesSerializar<T>(HttpResponseMessage response)
         {
             var respuestaStr = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(respuestaStr, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            return JsonSerializer.Deserialize<T>(respuestaStr,
+                                                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
     }
 }

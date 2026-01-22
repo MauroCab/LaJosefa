@@ -1,4 +1,7 @@
 ﻿@page "/crearPedido"
+@using ProyectoModelado2024.BD.Data.Entity
+@using ProyectoModelado2024.Client.Servicios
+@inject IHttpServicios http
 
 <PageTitle>Crear Pedido</PageTitle>
 
@@ -7,23 +10,80 @@
     <input type="text" name="searchCrear" id="searchbar">
     <input type="button" value="Buscar">
     <input type="button" class="custom-greenButton" id="verPedido" value="Ver Pedido Actual">
+    <input type="button" value="Refrescar" @onclick="()=>LeerListaProductos()">
     <h2>Productos Comunes</h2>
     <div class="custom-productContainer" id="commonProducts">
-        <article class="custom-product">
+
+       @*  <article class="custom-product">
             Producto
             <input type="number" name="quantityValue" class="quantity" value="0" min="0" max="99">
             <input type="checkbox" name="isCommonValue" class="isCommon">
             <input type="button" class="custom-greenButton" value="Añadir al pedido" style="display: block;  margin-top: 5px;">
-        </article>
+        </article> *@
+
+        
     </div>
 
     <h2>Todos los productos</h2>
     <div class="custom-productContainer" id="allProducts">
-                
+
+        @if (Mensaje == "")
+        {
+            @if (listaProductos == null)
+            {
+                <p>Cargando...</p>
+            }
+            else if (listaProductos.Count == 0)
+            {
+                <p>No hay productos disponibles.</p>
+            }
+            else
+            {
+
+                @foreach (var producto in listaProductos)
+                {
+                    <article class="custom-product">
+                        @producto.Nombre
+                        <input type="number" name="quantityValue" class="quantity" value="0" min="0" max="99">
+                        <input type="checkbox" name="isCommonValue" class="isCommon">
+                        <input type="button" class="custom-greenButton" value="Añadir al pedido" style="display: block;  margin-top: 5px;">
+                    </article>
+                }
+
+            }
+
+        }
+        else
+        {
+        <p> Error: @Mensaje</p>
+        }
     </div>
             
 </section>
 
 @code {
-    
+    private List<Producto>? listaProductos;
+
+    string Mensaje = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await LeerListaProductos();
+    }
+
+    private async Task LeerListaProductos()
+    {
+        var lp = await http.Get<List<Producto>>("api/Productos");
+
+        if (!lp.Error)
+        {
+            listaProductos = lp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await lp.ObtenerError();
+        }
+        
+    }
 }
