@@ -8,9 +8,9 @@
 <section id="crearPedido">
 
     <input type="text" name="searchCrear" id="searchbar">
-    <input type="button" value="Buscar">
+    <button type="button">Buscar</button>
     <input type="button" class="custom-greenButton" id="verPedido" value="Ver Pedido Actual">
-    <input type="button" value="Refrescar" @onclick="()=>LeerListaProductos()">
+    <button type="button" @onclick="() => LeerListaProductos()"> Refrescar </button>
     <h2>Productos Comunes</h2>
     <div class="custom-productContainer" id="commonProducts">
 
@@ -43,10 +43,35 @@
                 @foreach (var producto in listaProductos)
                 {
                     <article class="custom-product">
-                        @producto.Nombre
-                        <input type="number" name="quantityValue" class="quantity" value="0" min="0" max="99">
-                        <input type="checkbox" name="isCommonValue" class="isCommon">
-                        <input type="button" class="custom-greenButton" value="Añadir al pedido" style="display: block;  margin-top: 5px;">
+
+                        <div class="product-header">
+
+                            <h3 class="product-title">@producto.Nombre</h3>
+                            <label class="favorite-toggle">
+                                <input type="checkbox" name="isCommonValue" class="isCommon">
+                                <span class="material-symbols-outlined star-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" /></svg>
+                                </span>
+                            </label>
+
+                        </div>
+
+                        <div class="product-actions">
+
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus-btn">-</button>
+                                <input type="number" name="quantityValue" class="quantity-input" value="0" min="0" max="99">
+                                <button class="quantity-btn plus-btn">+</button>
+                            </div>
+
+                            <button class="add-to-cart-btn">
+                                <span class="material-symbols-outlined cart-icon">+</span>
+                                Añadir al pedido
+                            </button>
+
+                        </div>
+
+
                     </article>
                 }
 
