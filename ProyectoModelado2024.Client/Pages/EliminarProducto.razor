@@ -1,4 +1,7 @@
 ﻿@page "/eliminarProducto"
+@using ProyectoModelado2024.BD.Data.Entity
+@using ProyectoModelado2024.Client.Servicios
+@inject IHttpServicios http
 
 <PageTitle>Eliminar Productos</PageTitle>
 
@@ -7,15 +10,75 @@
     <input type="text" name="search" id="searchbar">
     <input type="button" value="Buscar">
     <div class="custom-productContainer">
-        <article class="custom-product">
-            Producto
-            <input type="button" class="custom-redButton" value="Eliminar Producto">
-        </article>
-        
+        @if (Mensaje == "")
+        {
+            @if (listaProductos == null)
+            {
+                <p>Cargando...</p>
+            }
+            else if (listaProductos.Count == 0)
+            {
+                <p>No hay productos disponibles.</p>
+            }
+            else
+            {
+
+                @foreach (var producto in listaProductos)
+                {
+                    <article class="custom-delete-product">
+
+                        <div class="product-header">
+
+                          <h3 class="product-title">@producto.Nombre</h3>
+
+                        </div>
+
+                        <div class="product-actions">
+
+                          <button class="custom-deleteButton">
+                            Eliminar Producto
+                          </button>
+
+                        </div>
+
+                    </article>
+                }
+
+            }
+
+        }
+        else
+        {
+            <p> Error: @Mensaje</p>
+        }
+    
     </div>
 
 </section>
 
 @code {
-   
+    private List<Producto>? listaProductos;
+
+    string Mensaje = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await LeerListaProductos();
+    }
+
+    private async Task LeerListaProductos()
+    {
+        var lp = await http.Get<List<Producto>>("api/Productos");
+
+        if (!lp.Error)
+        {
+            listaProductos = lp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await lp.ObtenerError();
+        }
+
+    }
 }
