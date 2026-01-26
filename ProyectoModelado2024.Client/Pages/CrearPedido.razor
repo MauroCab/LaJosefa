@@ -9,7 +9,9 @@
 
     <input type="text" name="searchCrear" id="searchbar">
     <button type="button">Buscar</button>
-    <input type="button" class="custom-greenButton" id="verPedido" value="Ver Pedido Actual">
+    <NavLink class="nav-link" href="VerPedido" id="link-ver-pedido">
+         <input type="button" class="custom-greenButton" id="verPedido" value="Ver Pedido Actual">
+    </NavLink>
     <button type="button" @onclick="() => LeerListaProductos()"> Refrescar </button>
     <h2>Productos Comunes</h2>
     <div class="custom-productContainer" id="commonProducts">
