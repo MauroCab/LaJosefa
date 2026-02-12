@@ -1,6 +1,8 @@
 ﻿@page "/crearPedido"
 @using ProyectoModelado2024.BD.Data.Entity
 @using ProyectoModelado2024.Client.Servicios
+@inject PedidoService PedidoService
+@inject NavigationManager Navigation
 @inject IHttpServicios http
 
 <PageTitle>Crear Pedido</PageTitle>
@@ -52,25 +54,39 @@
                             <label class="favorite-toggle">
                                 <input type="checkbox" name="isCommonValue" class="isCommon">
                                 <span class="material-symbols-outlined star-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-star">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" />
+                                    </svg>
                                 </span>
                             </label>
 
                         </div>
 
                         <div class="product-actions">
-
                             <div class="quantity-selector">
-                                <button class="quantity-btn minus-btn">-</button>
-                                <input type="number" name="quantityValue" class="quantity-input" value="0" min="0" max="99">
-                                <button class="quantity-btn plus-btn">+</button>
+                                <button class="quantity-btn minus-btn" @onclick="() => DecrementarCantidad(producto.Id)">
+                                    -
+                                </button>
+
+                                <input type="number"
+                                       name="quantityValue"
+                                       class="quantity-input"
+                                       @bind="cantidades[producto.Id]"
+                                       min="0"
+                                       max="99">
+
+                                <button class="quantity-btn plus-btn"
+                                        @onclick="() => IncrementarCantidad(producto.Id)">
+                                    +
+                                </button>
                             </div>
 
-                            <button class="add-to-cart-btn">
+                            <button class="add-to-cart-btn"
+                                    @onclick="() => AgregarAlPedido(producto)">
                                 <span class="material-symbols-outlined cart-icon">+</span>
                                 Añadir al pedido
                             </button>
-
                         </div>
 
 
@@ -90,6 +106,7 @@
 
 @code {
     private List<Producto>? listaProductos;
+    private Dictionary<int, int> cantidades = new();
 
     string Mensaje = "";
 
@@ -97,6 +114,15 @@
     {
         await base.OnInitializedAsync();
         await LeerListaProductos();
+
+        // Inicializar cantidades
+        if (listaProductos != null)
+        {
+            foreach (var producto in listaProductos)
+            {
+                cantidades[producto.Id] = 0; // O el valor inicial que quieras
+            }
+        }
     }
 
     private async Task LeerListaProductos()
@@ -113,4 +139,40 @@
         }
         
     }
+  
+    
+    
+    
+    // Método para manejar el botón +
+    private void IncrementarCantidad(int productoId)
+    {
+        if (cantidades.ContainsKey(productoId))
+        {
+            cantidades[productoId]++;
+        }
+    }
+    
+    // Método para manejar el botón -
+    private void DecrementarCantidad(int productoId)
+    {
+        if (cantidades.ContainsKey(productoId) && cantidades[productoId] > 0)
+        {
+            cantidades[productoId]--;
+        }
+    }
+    
+    // Método para el botón "Añadir al pedido"
+    private void AgregarAlPedido(Producto producto)
+    {
+        if (cantidades.ContainsKey(producto.Id) && cantidades[producto.Id] > 0)
+        {
+            PedidoService.AgregarAlPedido(producto, cantidades[producto.Id]);
+            // Opcional: Resetear la cantidad
+            cantidades[producto.Id] = 0;
+        }
+    }
+}
+
+
+
 }

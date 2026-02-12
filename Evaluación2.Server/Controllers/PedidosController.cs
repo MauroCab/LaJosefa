@@ -1,4 +1,5 @@
-﻿using ProyectoModelado2024.BD.Data;
+﻿
+  using ProyectoModelado2024.BD.Data;
 using ProyectoModelado2024.BD.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

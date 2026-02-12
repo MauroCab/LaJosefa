@@ -1,6 +1,8 @@
 ﻿@page "/verPedido"
 @using ProyectoModelado2024.BD.Data.Entity
 @using ProyectoModelado2024.Client.Servicios
+@inject PedidoService PedidoService
+@inject NavigationManager Navigation
 @inject IHttpServicios http
 
 <PageTitle>Crear Pedido</PageTitle>
@@ -10,37 +12,81 @@
     <h2>Tu Pedido</h2>
 
     <div class="order-container">
+        @if (PedidoService.Pedido.Renglones.Count == 0)
+        {
+            <p>No hay productos en el pedido.</p>
+        }
+        else
+        {
+            @foreach (var renglon in PedidoService.Pedido.Renglones)
+            {
+                <article class="ordered-product-card">
+                    <div class="name-container">@renglon.Producto.Nombre</div>
+                    <div class="ordered-product-actions">
 
-        <article class="ordered-product-card">
-            <div class="name-container">Nombre</div>
-            <div class="ordered-product-actions">
-                <p>X</p>
-                <input type="number" class="ordered-quantity" value="0" min="0" max="99">
-                <button class="delete-ordered-product-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M4 7l16 0" />
-                        <path d="M10 11l0 6" />
-                        <path d="M14 11l0 6" />
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                    </svg>
-                </button>
-            </div>
-        </article>
+                        <p>X</p>
+                        <input type="number" class="ordered-quantity" @bind="renglon.Cantidad" min="0" max="99">
+
+                        <button class="delete-ordered-product-button" @onclick="() => RemoverProducto(renglon.Producto.Id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 7l16 0" />
+                                <path d="M10 11l0 6" />
+                                <path d="M14 11l0 6" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
+                        </button>
+
+                    </div>
+                </article>
+            }
+        }
 
 
     </div>
 
     <div class="order-actions">
-        <button id="return-btn">Volver</button>
-        <button class="custom-greenButton">Enviar pedido</button>
+        <button id="return-btn" @onclick="Volver">Volver</button>
+        <button class="custom-greenButton" @onclick="EnviarPedido">Enviar pedido</button>
     </div>
 
 
 </section>
 @code {
-    
+
+    protected override void OnInitialized()
+    {
+        PedidoService.OnCambio += StateHasChanged;
+    }
+
+    private void RemoverProducto(int productoId)
+    {
+        PedidoService.RemoverDelPedido(productoId);
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/crearPedido"); // O la ruta de tu página de productos
+    }
+
+    private async Task EnviarPedido()
+    {
+        // Aquí guardas el pedido en la BD
+        // Por ejemplo:
+        // await http.Post("api/Pedidos", PedidoService.Pedido);
+
+        // Luego limpias el pedido
+        PedidoService.LimpiarPedido();
+
+        // Y rediriges
+        Navigation.NavigateTo("/");
+    }
+
+    public void Dispose()
+    {
+        PedidoService.OnCambio -= StateHasChanged;
+    }
 }
