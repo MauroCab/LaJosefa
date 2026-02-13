@@ -23,7 +23,7 @@ namespace ProyectoModelado2024.Server.Controllers
             this.mapper = mapper;
         }
 
-        #region Peticiones Get
+        #region Get y GetById
 
         [HttpGet]
         public async Task<ActionResult<List<PedidoDTO>>> Get()
@@ -47,7 +47,9 @@ namespace ProyectoModelado2024.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> Post([FromBody] CrearPedidoDTO entidadDTO)
         {
-            if (entidadDTO == null || entidadDTO.Renglones == null || !entidadDTO.Renglones.Any())
+            bool pedidoEstaVacio = entidadDTO == null || entidadDTO.Renglones == null || !entidadDTO.Renglones.Any();
+
+            if (pedidoEstaVacio)
             {
                 return BadRequest("El pedido debe contener al menos un renglón.");
             }

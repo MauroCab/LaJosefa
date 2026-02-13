@@ -22,7 +22,7 @@ namespace ProyectoModelado2024.Server.Controllers
             this.mapper = mapper;
         }
 
-        #region Peticiones Get
+        #region Get y GetById
 
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> Get()
@@ -40,13 +40,6 @@ namespace ProyectoModelado2024.Server.Controllers
             return Ok(producto);
         }
 
-        [HttpGet("existe/{id:int}")]
-        public async Task<ActionResult<bool>> Existe(int id)
-        {
-            var existe = await repositorio.Existe(id);
-            return existe;
-        }
-
         #endregion
 
         [HttpPost]
@@ -57,34 +50,6 @@ namespace ProyectoModelado2024.Server.Controllers
                 Producto entidad = mapper.Map<Producto>(entidadDTO);
                 await repositorio.Insert(entidad);
                 return entidad.Id;
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int id, [FromBody] Producto entidad)
-        {
-            if (id != entidad.Id)
-            {
-                return BadRequest("Datos incorrectos");
-            }
-            var sel = await repositorio.SelectById(id);
-            //sel = Seleccion
-
-            if (sel == null)
-            {
-                return NotFound("No existe el tipo de documento buscado.");
-            }
-
-            sel = mapper.Map<Producto>(entidad); 
-
-            try
-            {
-                await repositorio.Update(id, sel);
-                return Ok();
             }
             catch (Exception e)
             {
