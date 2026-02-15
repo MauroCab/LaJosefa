@@ -12,4 +12,14 @@ namespace ProyectoModelado2024.Shared.DTO
     {
         public List<CrearRenglonDTO> Renglones { get; set; }
     }
+
+    public class CrearRenglonDTO
+    {
+        [Required(ErrorMessage = "El id del producto a pedir es obligatorio")]
+        public int ProductoId { get; set; }
+
+
+        [Required(ErrorMessage = "La cantidad es obligatoria")]
+        public int Cantidad { get; set; }
+    }
 }

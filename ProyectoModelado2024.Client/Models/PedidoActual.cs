@@ -8,7 +8,7 @@ namespace ProyectoModelado2024.Client.Models
 
         public void AgregarProducto(Producto producto, int cantidad)
         {
-            var renglonExistente = Renglones.FirstOrDefault(r => r.Producto.Id == producto.Id);
+            var renglonExistente = Renglones.FirstOrDefault(r => r.Producto.Id == producto.Id); 
 
             if (renglonExistente != null)
             {

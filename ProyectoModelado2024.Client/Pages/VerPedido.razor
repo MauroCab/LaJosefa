@@ -75,8 +75,7 @@
     private async Task EnviarPedido()
     {
         // Aquí guardas el pedido en la BD
-        // Por ejemplo:
-        // await http.Post("api/Pedidos", PedidoService.Pedido);
+        await http.Post("api/Pedidos", PedidoService.Pedido);
 
         // Luego limpias el pedido
         PedidoService.LimpiarPedido();
