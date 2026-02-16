@@ -8,13 +8,21 @@ namespace ProyectoModelado2024.Shared.DTO
 {
     public class PedidoDTO
     {
-        public DateTime Fecha { get; set; }
         public List<RenglonDTO> Renglones { get; set; }
     }
 
     public class RenglonDTO
     {
         public int Cantidad { get; set; }
-        public string ProductoNombre { get; set; }
+
+        public ProductoDTO Producto { get; set; }
     }
+
+    public class ProductoDTO
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public bool EsComun { get; set; }
+    }
+
 }
