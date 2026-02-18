@@ -26,13 +26,13 @@ namespace ProyectoModelado2024.Server.Controllers
         #region Get y GetById
 
         [HttpGet]
-        public async Task<ActionResult<List<PedidoDTO>>> Get()
+        public async Task<ActionResult<List<GetPedidoDTO>>> Get()
         {
             return await repositorio.FullGetAll();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<PedidoDTO>> Get(int id)
+        public async Task<ActionResult<GetPedidoDTO>> Get(int id)
         {
             var pedido = await repositorio.FullGetById(id);
 
@@ -48,7 +48,7 @@ namespace ProyectoModelado2024.Server.Controllers
         public async Task<ActionResult<int>> Post([FromBody] CrearPedidoDTO entidadDTO)
         {
             bool pedidoEstaVacio = entidadDTO == null || entidadDTO.Renglones == null || !entidadDTO.Renglones.Any();
-
+            
             if (pedidoEstaVacio)
             {
                 return BadRequest("El pedido debe contener al menos un renglón.");
@@ -62,14 +62,14 @@ namespace ProyectoModelado2024.Server.Controllers
                     FechaHora = DateTime.Now
                 };
 
-                
+
                 var renglones = entidadDTO.Renglones.Select(r => new Renglon
                 {
-                    ProductoId = r.ProductoId,
-                    Cantidad = r.Cantidad
+                    Cantidad = r.Cantidad,
+                    ProductoId = r.Producto.Id
                 }).ToList();
 
-                
+
                 var pedidoCreado = await repositorio.AddPedidoConRenglones(nuevoPedido, renglones);
 
                 return pedidoCreado.Id;  

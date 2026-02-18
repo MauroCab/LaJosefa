@@ -1,12 +1,13 @@
 ﻿using ProyectoModelado2024.BD.Data.Entity;
+using ProyectoModelado2024.Shared.DTO;
 
 namespace ProyectoModelado2024.Client.Models
 {
     public class PedidoActual
     {
-        public List<Renglon> Renglones { get; set; } = new();
+        public List<RenglonDTO> Renglones { get; set; } = new();
 
-        public void AgregarProducto(Producto producto, int cantidad)
+        public void AgregarProducto(ProductoDTO producto, int cantidad)
         {
             var renglonExistente = Renglones.FirstOrDefault(r => r.Producto.Id == producto.Id); 
 
@@ -16,7 +17,7 @@ namespace ProyectoModelado2024.Client.Models
             }
             else
             {
-                Renglones.Add(new Renglon
+                Renglones.Add(new RenglonDTO
                 {
                     Producto = producto,
                     Cantidad = cantidad

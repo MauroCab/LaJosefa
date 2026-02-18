@@ -11,8 +11,7 @@ namespace ProyectoModelado2024.Server.Util
             CreateMap<CrearTProductoDTO, TProducto>();
             CreateMap<CrearProductoDTO, Producto>();
             CreateMap<CrearPedidoDTO, Pedido>();
-            CreateMap<CrearRenglonDTO, Renglon>();
-
+            CreateMap<RenglonDTO, Renglon>();
 
         }
 

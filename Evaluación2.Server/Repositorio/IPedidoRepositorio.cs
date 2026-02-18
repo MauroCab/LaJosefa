@@ -6,7 +6,7 @@ namespace ProyectoModelado2024.Server.Repositorio
     public interface IPedidoRepositorio : IRepositorio<Pedido>
     {
         Task<Pedido> AddPedidoConRenglones(Pedido pedido, List<Renglon> renglones);
-        Task<List<PedidoDTO>> FullGetAll();
-        Task<PedidoDTO> FullGetById(int id);
+        Task<List<GetPedidoDTO>> FullGetAll();
+        Task<GetPedidoDTO> FullGetById(int id);
     }
 }

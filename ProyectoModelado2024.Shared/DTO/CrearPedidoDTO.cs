@@ -1,7 +1,5 @@
-﻿using ProyectoModelado2024.BD.Data.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +8,21 @@ namespace ProyectoModelado2024.Shared.DTO
 {
     public class CrearPedidoDTO
     {
-        public List<CrearRenglonDTO> Renglones { get; set; }
+        public List<RenglonDTO> Renglones { get; set; }
     }
 
-    public class CrearRenglonDTO
+    public class RenglonDTO
     {
-        [Required(ErrorMessage = "El id del producto a pedir es obligatorio")]
-        public int ProductoId { get; set; }
-
-
-        [Required(ErrorMessage = "La cantidad es obligatoria")]
         public int Cantidad { get; set; }
+
+        public ProductoDTO Producto { get; set; }
     }
+
+    public class ProductoDTO
+    {
+        public required int Id { get; set; }
+        public required string Nombre { get; set; }
+        public bool EsComun { get; set; }
+    }
+
 }

@@ -1,6 +1,7 @@
 ﻿@page "/crearPedido"
 @using ProyectoModelado2024.BD.Data.Entity
 @using ProyectoModelado2024.Client.Servicios
+@using ProyectoModelado2024.Shared.DTO
 @inject PedidoService PedidoService
 @inject NavigationManager Navigation
 @inject IHttpServicios http
@@ -105,7 +106,7 @@
 </section>
 
 @code {
-    private List<Producto>? listaProductos;
+    private List<ProductoDTO>? listaProductos;
     private Dictionary<int, int> cantidades = new();
 
     string Mensaje = "";
@@ -127,19 +128,39 @@
 
     private async Task LeerListaProductos()
     {
-        var lp = await http.Get<List<Producto>>("api/Productos");
+        var listaProductosBrutos = await http.Get<List<Producto>>("api/Productos");
 
-        if (!lp.Error)
+        if (!listaProductosBrutos.Error)
         {
-            listaProductos = lp.Respuesta;
+            listaProductos = listaProductosBrutos.Respuesta.Select(p => new ProductoDTO
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                EsComun = p.EsComun
+            }).ToList();
         }
         else
         {
-            Mensaje = await lp.ObtenerError();
+            Mensaje = await listaProductosBrutos.ObtenerError();
         }
         
     }
   
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && listaProductos != null)
+        {
+            // Inicializar cantidades después del primer render
+            foreach (var producto in listaProductos)
+            {
+                if (!cantidades.ContainsKey(producto.Id))
+                {
+                    cantidades[producto.Id] = 0;
+                }
+            }
+            StateHasChanged();
+        }
+    }
     
     
     
@@ -162,7 +183,7 @@
     }
     
     // Método para el botón "Añadir al pedido"
-    private void AgregarAlPedido(Producto producto)
+    private void AgregarAlPedido(ProductoDTO producto)
     {
         if (cantidades.ContainsKey(producto.Id) && cantidades[producto.Id] > 0)
         {

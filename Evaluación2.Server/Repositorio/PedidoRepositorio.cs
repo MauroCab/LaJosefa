@@ -14,17 +14,17 @@ namespace ProyectoModelado2024.Server.Repositorio
             this.context = context;
         }
 
-        public async Task<List<PedidoDTO>> FullGetAll()
+        public async Task<List<GetPedidoDTO>> FullGetAll()
         {
             var pedidos = await context.Pedidos
                                 .Include(p => p.Renglones)
                                 .ThenInclude(r => r.Producto)
                                 .ToListAsync();
 
-            return pedidos.Select(p => new PedidoDTO
+            return pedidos.Select(p => new GetPedidoDTO
             {
                 Fecha = p.FechaHora,
-                Renglones = p.Renglones.Select(r => new RenglonDTO
+                Renglones = p.Renglones.Select(r => new GetRenglonDTO
                 {
                     Cantidad = r.Cantidad,
                     ProductoNombre = r.Producto.Nombre // Aquí se obtiene el nombre del producto
@@ -32,7 +32,7 @@ namespace ProyectoModelado2024.Server.Repositorio
             }).ToList();
         }
 
-        public async Task<PedidoDTO> FullGetById(int id)
+        public async Task<GetPedidoDTO> FullGetById(int id)
         {
             var pedido = await context.Pedidos
                             .Include(p => p.Renglones)
@@ -42,10 +42,10 @@ namespace ProyectoModelado2024.Server.Repositorio
             if (pedido == null)
                 return null;
 
-            return new PedidoDTO
+            return new GetPedidoDTO
             {
                 Fecha = pedido.FechaHora,
-                Renglones = pedido.Renglones.Select(r => new RenglonDTO
+                Renglones = pedido.Renglones.Select(r => new GetRenglonDTO
                 {
                     Cantidad = r.Cantidad,
                     ProductoNombre = r.Producto.Nombre
@@ -60,7 +60,6 @@ namespace ProyectoModelado2024.Server.Repositorio
             {
                 try
                 {
-
                     context.Pedidos.Add(pedido);
                     await context.SaveChangesAsync();
 

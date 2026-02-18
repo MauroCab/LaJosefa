@@ -1,5 +1,6 @@
 ﻿using ProyectoModelado2024.BD.Data.Entity;
 using ProyectoModelado2024.Client.Models;
+using ProyectoModelado2024.Shared.DTO;
 
 namespace ProyectoModelado2024.Client.Servicios
 {
@@ -9,7 +10,7 @@ namespace ProyectoModelado2024.Client.Servicios
 
         public event Action? OnCambio;
 
-        public void AgregarAlPedido(Producto producto, int cantidad)
+        public void AgregarAlPedido(ProductoDTO producto, int cantidad)
         {
             Pedido.AgregarProducto(producto, cantidad);
             OnCambio?.Invoke();
