@@ -67,7 +67,7 @@ namespace ProyectoModelado2024.Server.Servicios
                 await File.WriteAllBytesAsync(tempPath, pdfBytes);
 
                 // 4. Crear URL pública del archivo
-                var appUrl = _configuration["AppUrl"] ?? "https://localhost:7189";
+                var appUrl = _configuration["AppUrl"] ?? "https://hypermiraculous-unleniently-rochelle.ngrok-free.dev";
                 var fileUrl = $"{appUrl}/temp/{fileName}";
 
                 // 5. Preparar mensaje
