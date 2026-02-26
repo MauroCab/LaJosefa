@@ -93,7 +93,22 @@ namespace ProyectoModelado2024.Server.Servicios
                 var message = await MessageResource.CreateAsync(messageOptions);
                 _logger.LogInformation($"Mensaje enviado con SID: {message.Sid}");
 
-                File.Delete(tempPath);
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(TimeSpan.FromMinutes(10));
+                    try
+                    {
+                        if (File.Exists(tempPath))
+                        {
+                            File.Delete(tempPath);
+                            _logger.LogInformation($"PDF temporal eliminado: {fileName}");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"Error eliminando PDF temporal: {ex.Message}");
+                    }
+                });
 
                 return true;
             }
