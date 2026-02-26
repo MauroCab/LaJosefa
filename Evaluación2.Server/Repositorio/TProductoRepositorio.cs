@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProyectoModelado2024.BD.Data;
 using ProyectoModelado2024.BD.Data.Entity;
 

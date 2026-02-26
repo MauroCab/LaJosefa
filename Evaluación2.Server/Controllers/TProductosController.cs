@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProyectoModelado2024.BD.Data;
 using ProyectoModelado2024.BD.Data.Entity;
 using ProyectoModelado2024.Server.Repositorio;
 using ProyectoModelado2024.Shared.DTO;
@@ -55,9 +53,9 @@ namespace ProyectoModelado2024.Server.Controllers
             }
         }
 
-        
-        
 
-        
+
+
+
     }
 }

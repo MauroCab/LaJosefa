@@ -1,7 +1,8 @@
-using ProyectoModelado2024.BD.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
+using ProyectoModelado2024.BD.Data;
 using ProyectoModelado2024.Server.Repositorio;
+using ProyectoModelado2024.Server.Servicios;
+using System.Text.Json.Serialization;
 
 //Constructor de la aplicación
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<ITProductoRepositorio, TProductoRepositorio>();
 builder.Services.AddScoped<IProductoRepositorio, ProductoRepositorio>();
 builder.Services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
+builder.Services.AddScoped<IWhatsAppService, WhatsAppService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddScoped(sp => new HttpClient
 {
